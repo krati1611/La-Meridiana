@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{ background:#CBC4B4; font-family:'Manrope',sans-serif; }
+  .lab{ font-family:'Cormorant Garamond',Georgia,serif; }
+  .eyb{ font-family:'Manrope',sans-serif; letter-spacing:.28em; text-transform:uppercase; font-weight:600; }
+  .art{ position:relative; overflow:hidden; background:#0D0D0D; flex:none; box-shadow:0 30px 80px rgba(13,13,13,.28); }
+  .cap{ font-family:'Manrope',sans-serif; font-size:26px; font-weight:600; color:#272401; letter-spacing:.02em; }
+  .dim{ font-family:ui-monospace,monospace; font-size:20px; color:rgba(39,36,1,.55); }
+  .row{ display:flex; flex-wrap:wrap; gap:70px; align-items:flex-start; }
+  .grouphead{ font-family:'Cormorant Garamond',serif; font-size:76px; font-weight:500; color:#272401; }
+  .grouprule{ height:2px; background:rgba(39,36,1,.25); flex:1; min-width:60px; }
+  .pill{ display:inline-flex; align-items:center; }
+</style>
+</helmet>
+
+<div style="padding:120px; display:flex; flex-direction:column; gap:130px; width:max-content;">
+
+  <!-- ░░░ HEADER ░░░ -->
+  <div style="max-width:1400px;">
+    <p class="eyb" style="font-size:24px; color:#557373; margin-bottom:28px;">La Meridiana · BY.OPEN · Social Kit</p>
+    <h1 class="lab" style="font-size:150px; line-height:.92; font-weight:500; color:#272401; letter-spacing:-.02em;">Social Canvas</h1>
+    <p style="font-size:34px; line-height:1.5; color:rgba(39,36,1,.7); margin-top:34px; max-width:1200px;">Ready-to-post artboards at real export sizes — Instagram, TikTok, X and LinkedIn — all drawn from the same light, palette and voice as the site. Swap any image; every frame is captioned with its platform and pixel size.</p>
+  </div>
+
+  <!-- ═══════════════ INSTAGRAM ═══════════════ -->
+  <div style="display:flex; align-items:center; gap:40px; width:100%;"><span class="grouphead">Instagram</span><span class="grouprule"></span></div>
+  <div class="row">
+
+    <!-- IG FEED POST · 1080×1080 -->
+    <div>
+      <div class="art" style="width:1080px; height:1080px;">
+        <img src="uploads/ChatGPT Image Jul 2, 2026, 11_40_12 PM.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.72;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,13,.55), transparent 34%, rgba(13,13,13,.72));"></div>
+        <div style="position:absolute; inset:0; padding:80px; display:flex; flex-direction:column; justify-content:space-between; color:#F2EFEA;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="lab" style="font-size:46px; font-weight:600;">La Meridiana</span>
+            <span class="eyb" style="font-size:18px; color:#DFE5F3;">Nagüeles · Marbella</span>
+          </div>
+          <div>
+            <p class="eyb" style="font-size:20px; color:#DFE5F3; margin-bottom:22px;">11 villas · Sierra Blanca</p>
+            <h2 class="lab" style="font-size:104px; line-height:.92; font-weight:500; letter-spacing:-.02em;">Where the day<br>stays longest.</h2>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1080px;"><span class="cap">Instagram · Feed Post</span><span class="dim">1080 × 1080</span></div>
+    </div>
+
+    <!-- IG STORY · 1080×1920 -->
+    <div>
+      <div class="art" style="width:1080px; height:1920px;">
+        <img src="uploads/Architectural_render_luxury_villa_202607022259.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,13,.45), transparent 30%, transparent 55%, rgba(13,13,13,.82));"></div>
+        <div style="position:absolute; inset:0; padding:96px 80px; display:flex; flex-direction:column; justify-content:space-between; color:#F2EFEA;">
+          <span class="eyb" style="font-size:22px; color:#F2EFEA; align-self:center; border:1px solid rgba(242,239,234,.5); padding:16px 30px; border-radius:50px;">La Meridiana</span>
+          <div>
+            <p class="eyb" style="font-size:22px; color:#DFE5F3; margin-bottom:26px;">Afternoon · The Terrace</p>
+            <h2 class="lab" style="font-size:120px; line-height:.9; font-weight:500; letter-spacing:-.02em;">The afternoon refuses to hurry.</h2>
+            <div style="margin-top:60px; display:flex; align-items:center; gap:24px; justify-content:center; background:rgba(242,239,234,.14); backdrop-filter:blur(6px); border:1px solid rgba(242,239,234,.4); border-radius:60px; padding:30px;">
+              <span class="eyb" style="font-size:26px; color:#F2EFEA;">↑ Request the brochure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1080px;"><span class="cap">Instagram · Story</span><span class="dim">1080 × 1920</span></div>
+    </div>
+
+    <!-- IG REEL COVER · 1080×1920 -->
+    <div>
+      <div class="art" style="width:1080px; height:1920px;">
+        <img src="uploads/Architectural_interior_render_lu..._202607022254.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.82;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,13,.3), transparent 40%, rgba(13,13,13,.8));"></div>
+        <div style="position:absolute; inset:0; padding:96px 80px; display:flex; flex-direction:column; justify-content:flex-end; color:#F2EFEA;">
+          <span class="lab" style="position:absolute; top:96px; left:80px; font-size:44px; font-weight:600;">La Meridiana</span>
+          <p class="eyb" style="font-size:22px; color:#DFE5F3; margin-bottom:26px;">Midday · The Salón</p>
+          <h2 class="lab" style="font-size:128px; line-height:.88; font-weight:500; letter-spacing:-.02em;">Where the sun gathers everyone.</h2>
+          <p style="font-size:30px; line-height:1.5; color:rgba(242,239,234,.82); margin-top:34px; max-width:20ch;">~37m² of open-plan living, built around the light.</p>
+        </div>
+        <div style="position:absolute; bottom:96px; right:80px; width:96px; height:96px; border:2px solid rgba(242,239,234,.55); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#F2EFEA; font-size:40px;">▶</div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1080px;"><span class="cap">Instagram · Reel Cover</span><span class="dim">1080 × 1920</span></div>
+    </div>
+
+    <!-- IG PORTRAIT POST · 1080×1350 -->
+    <div>
+      <div class="art" style="width:1080px; height:1350px;">
+        <img src="uploads/Architectural_render_luxury_vill..._202607022317.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,13,.5), transparent 32%, rgba(13,13,13,.7));"></div>
+        <div style="position:absolute; inset:0; padding:80px; display:flex; flex-direction:column; justify-content:space-between; color:#F2EFEA;">
+          <span class="lab" style="font-size:44px; font-weight:600;">La Meridiana</span>
+          <div>
+            <p class="eyb" style="font-size:20px; color:#DFE5F3; margin-bottom:22px;">Arrival</p>
+            <h2 class="lab" style="font-size:96px; line-height:.92; font-weight:500; letter-spacing:-.02em;">The temperature breaks.</h2>
+            <div style="display:flex; gap:44px; margin-top:44px;">
+              <div><div class="lab" style="font-size:66px; color:#DFE5F3;">4</div><div class="eyb" style="font-size:16px; color:#DFE5F3; margin-top:6px;">Levels · lift</div></div>
+              <div><div class="lab" style="font-size:66px; color:#DFE5F3;">11</div><div class="eyb" style="font-size:16px; color:#DFE5F3; margin-top:6px;">Villas</div></div>
+              <div><div class="lab" style="font-size:66px; color:#DFE5F3;">~37m²</div><div class="eyb" style="font-size:16px; color:#DFE5F3; margin-top:6px;">Salón</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1080px;"><span class="cap">Instagram · Portrait Post</span><span class="dim">1080 × 1350</span></div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ TIKTOK ═══════════════ -->
+  <div style="display:flex; align-items:center; gap:40px; width:100%;"><span class="grouphead">TikTok</span><span class="grouprule"></span></div>
+  <div class="row">
+    <!-- TIKTOK · 1080×1920 -->
+    <div>
+      <div class="art" style="width:1080px; height:1920px;">
+        <img src="uploads/Architectural_interior_render_lu..._202607022306.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,13,.35), transparent 38%, rgba(26,24,8,.86));"></div>
+        <!-- keep captions clear of TikTok's right-side UI + bottom bar -->
+        <div style="position:absolute; inset:0; padding:120px 80px 320px; display:flex; flex-direction:column; justify-content:flex-end; color:#F2EFEA;">
+          <span class="lab" style="position:absolute; top:100px; left:80px; font-size:44px; font-weight:600;">La Meridiana</span>
+          <p class="eyb" style="font-size:22px; color:#DFE5F3; margin-bottom:24px;">Evening · The Bedrooms</p>
+          <h2 class="lab" style="font-size:118px; line-height:.9; font-weight:500; letter-spacing:-.02em; max-width:12ch;">The house keeps the warmth it gathered.</h2>
+          <p style="font-size:30px; color:rgba(242,239,234,.8); margin-top:30px;">POV: you moved for the light.</p>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1080px;"><span class="cap">TikTok · Full Screen</span><span class="dim">1080 × 1920 · safe-area aware</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ X (TWITTER) ═══════════════ -->
+  <div style="display:flex; align-items:center; gap:40px; width:100%;"><span class="grouphead">X</span><span class="grouprule"></span></div>
+  <div class="row">
+    <!-- X POST · 1600×900 -->
+    <div>
+      <div class="art" style="width:1600px; height:900px; display:grid; grid-template-columns:1fr 1fr; background:#F2EFEA;">
+        <div style="padding:96px; display:flex; flex-direction:column; justify-content:center; color:#272401;">
+          <span class="lab" style="font-size:44px; font-weight:600; margin-bottom:auto;">La Meridiana</span>
+          <p class="eyb" style="font-size:20px; color:#557373; margin:56px 0 24px;">Nagüeles · Marbella</p>
+          <h2 class="lab" style="font-size:92px; line-height:.92; font-weight:500; letter-spacing:-.02em;">Where the day stays longest.</h2>
+          <p style="font-size:27px; line-height:1.5; color:rgba(39,36,1,.68); margin-top:26px; max-width:26ch;">Eleven villas built so the light — and the family — never leaves early.</p>
+        </div>
+        <div style="position:relative; overflow:hidden;">
+          <img src="uploads/Luxury_villa_interior_render_202607022322.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1600px;"><span class="cap">X · In-stream Post</span><span class="dim">1600 × 900 (16:9)</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ LINKEDIN ═══════════════ -->
+  <div style="display:flex; align-items:center; gap:40px; width:100%;"><span class="grouphead">LinkedIn</span><span class="grouprule"></span></div>
+  <div class="row">
+
+    <!-- LINKEDIN LINK POST · 1200×627 -->
+    <div>
+      <div class="art" style="width:1200px; height:627px; background:#DFE5F3;">
+        <div style="position:absolute; inset:0; display:grid; grid-template-columns:1.15fr .85fr;">
+          <div style="padding:70px; display:flex; flex-direction:column; justify-content:center; color:#272401;">
+            <span class="lab" style="font-size:34px; font-weight:600;">La Meridiana · BY.OPEN</span>
+            <h2 class="lab" style="font-size:64px; line-height:.98; font-weight:500; letter-spacing:-.01em; margin-top:26px;">A collection of 11 detached villas in Sierra Blanca.</h2>
+            <p style="font-size:22px; line-height:1.5; color:rgba(39,36,1,.65); margin-top:22px; max-width:34ch;">Four levels, private lift, rooftop solarium. Now releasing — request the brochure.</p>
+          </div>
+          <div style="position:relative; overflow:hidden;"><img src="uploads/Architectural_render_luxury_villa_202607022258-098437e8.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></div>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1200px;"><span class="cap">LinkedIn · Link / Feed Image</span><span class="dim">1200 × 627 (1.91:1)</span></div>
+    </div>
+
+    <!-- LINKEDIN SQUARE · 1200×1200 -->
+    <div>
+      <div class="art" style="width:1200px; height:1200px; background:linear-gradient(180deg,#DFE5F3,#F2EFEA);">
+        <div style="position:absolute; inset:0; padding:96px; display:flex; flex-direction:column; color:#272401;">
+          <span class="lab" style="font-size:40px; font-weight:600;">La Meridiana</span>
+          <p class="eyb" style="font-size:20px; color:#557373; margin-top:auto; margin-bottom:22px;">The light arc</p>
+          <h2 class="lab" style="font-size:88px; line-height:.94; font-weight:500; letter-spacing:-.02em;">From grey mornings to golden hour.</h2>
+          <div style="margin-top:44px; height:44px; border-radius:40px; background:linear-gradient(90deg,#DFE5F3,#E5DFD3 55%,#F2EFEA); border:1px solid rgba(39,36,1,.14);"></div>
+          <div style="display:flex; justify-content:space-between; margin-top:16px;">
+            <span class="eyb" style="font-size:16px; color:#557373;">Dawn</span>
+            <span class="eyb" style="font-size:16px; color:#557373;">Midday</span>
+            <span class="eyb" style="font-size:16px; color:#3F5959;">Golden hour</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1200px;"><span class="cap">LinkedIn · Square Post</span><span class="dim">1200 × 1200</span></div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ YOUTUBE ═══════════════ -->
+  <div style="display:flex; align-items:center; gap:40px; width:100%;"><span class="grouphead">YouTube</span><span class="grouprule"></span></div>
+  <div class="row">
+
+    <!-- YOUTUBE THUMBNAIL · 1280×720 -->
+    <div>
+      <div class="art" style="width:1280px; height:720px;">
+        <img src="uploads/ChatGPT Image Jul 2, 2026, 11_40_12 PM.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.8;">
+        <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(13,13,13,.82), rgba(13,13,13,.2) 62%, transparent);"></div>
+        <div style="position:absolute; inset:0; padding:80px; display:flex; flex-direction:column; justify-content:space-between; color:#F2EFEA;">
+          <span class="lab" style="font-size:42px; font-weight:600;">La Meridiana</span>
+          <div>
+            <p class="eyb" style="font-size:20px; color:#DFE5F3; margin-bottom:22px;">Full villa tour · 4K</p>
+            <h2 class="lab" style="font-size:110px; line-height:.88; font-weight:600; letter-spacing:-.02em; max-width:14ch;">Where the day stays longest.</h2>
+          </div>
+        </div>
+        <!-- play glyph -->
+        <div style="position:absolute; right:90px; bottom:90px; width:150px; height:150px; border-radius:50%; background:rgba(85,115,115,.9); display:flex; align-items:center; justify-content:center; color:#F2EFEA; font-size:60px; box-shadow:0 20px 60px rgba(13,13,13,.4);">▶</div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1280px;"><span class="cap">YouTube · Video Thumbnail</span><span class="dim">1280 × 720 · thumbnail over #vid slot</span></div>
+    </div>
+
+    <!-- YOUTUBE SHORT · 1080×1920 -->
+    <div>
+      <div class="art" style="width:1080px; height:1920px;">
+        <img src="uploads/Architectural_render_luxury_vill..._202607022317.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.85;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,13,.35), transparent 40%, rgba(13,13,13,.82));"></div>
+        <div style="position:absolute; inset:0; padding:120px 80px 300px; display:flex; flex-direction:column; justify-content:flex-end; color:#F2EFEA;">
+          <span class="lab" style="position:absolute; top:100px; left:80px; font-size:44px; font-weight:600;">La Meridiana</span>
+          <p class="eyb" style="font-size:22px; color:#DFE5F3; margin-bottom:24px;">Arrival · the light breaks</p>
+          <h2 class="lab" style="font-size:122px; line-height:.9; font-weight:500; letter-spacing:-.02em; max-width:11ch;">Step in. The temperature breaks.</h2>
+          <p style="font-size:30px; color:rgba(242,239,234,.8); margin-top:30px;">Private lift · rooftop · Sierra Blanca.</p>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:1080px;"><span class="cap">YouTube · Short</span><span class="dim">1080 × 1920 · safe-area aware</span></div>
+    </div>
+
+    <!-- YOUTUBE CHANNEL ART · 2560×1440 (TV-safe title in center 1546×423) -->
+    <div>
+      <div class="art" style="width:2560px; height:1440px;">
+        <img src="uploads/Architectural_render_luxury_villa_202607022259.jpeg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5;">
+        <div style="position:absolute; inset:0; background:radial-gradient(70% 90% at 50% 50%, rgba(13,13,13,.35), rgba(13,13,13,.82));"></div>
+        <!-- TV-safe center region guide -->
+        <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:1546px; height:423px; border:1px dashed rgba(242,239,234,.3); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#F2EFEA; text-align:center;">
+          <span class="lab" style="font-size:110px; font-weight:500; letter-spacing:-.02em;">La Meridiana</span>
+          <p class="eyb" style="font-size:24px; color:#DFE5F3; margin-top:18px;">Nagüeles · Marbella · Where the day stays longest</p>
+        </div>
+        <span class="eyb" style="position:absolute; left:50%; top:calc(50% + 240px); transform:translateX(-50%); font-size:16px; color:rgba(242,239,234,.4);">↑ Safe area — visible on all devices (1546 × 423)</span>
+      </div>
+      <div style="margin-top:26px; display:flex; justify-content:space-between; width:2560px;"><span class="cap">YouTube · Channel Art / Banner</span><span class="dim">2560 × 1440 · TV-safe center</span></div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

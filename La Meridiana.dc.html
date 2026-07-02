@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  LA MERIDIANA — Nagüeles, Marbella · BY.OPEN · "Where the day stays longest."
+  ════════════════════════════════════════════════════════════════════════
+  ASSET MANIFEST — every slot id + what to provide (drop real files in `src`):
+  ── VIDEO ──────────────────────────────────────────────────────────────
+   #vid-hero        VIDEO  Full-bleed cold dawn over Sierra Blanca, slow drift
+   #vid-crossing    VIDEO  First-person drive up the mountain road, grey→first gold
+   #vid-salon       VIDEO  Salón-comedor, family gathering at midday (scrub-on-scroll)
+  ── IMAGE (renders / photography) ───────────────────────────────────────
+   #img-arrival     IMAGE  The door + hall, first flood of southern light
+   #render-kitchen  IMAGE  Kitchen render, cool morning, family beginning the day
+   #photo-kitchen   IMAGE  Kitchen real site photo (replaces render on reveal)
+   #render-salon    IMAGE  Salón-comedor render, golden hour, family entering
+   #photo-salon     IMAGE  Salón-comedor real site photo
+   #img-terrace     IMAGE  Terrace + garden, light spilling outdoors
+   #img-rooftop-1   IMAGE  Rooftop solarium, warmest frame, golden hour
+   #img-rooftop-2   IMAGE  Covered pergola lounge
+   #img-rooftop-3   IMAGE  Roof garden
+   #img-map         IMAGE  Map / site plan, Nagüeles Golden Mile
+   #plan-39 … #plan-50  IMAGE  Per-unit floor plans (11 units, no 43)
+   (bedroom + dining slots use the real uploaded photos already wired)
+  ── 3D ─────────────────────────────────────────────────────────────────
+   MODEL_PATH (in logic) GLB/GLTF villa model — drop path; tune WAYPOINTS[]
+  ════════════════════════════════════════════════════════════════════════
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  body{
+    --ink:#0D0D0D; --ink-soft:#272401; --cream:#F2EFEA; --sand:#E5DFD3;
+    --sand-deep:#CBC4B4; --mist:#DFE5F3; --accent:#557373; --accent-deep:#3F5959;
+    --rule:rgba(13,13,13,.14); --warmth:0;
+    --page-bg: color-mix(in oklab, var(--mist), var(--cream) calc(var(--warmth) * 100%));
+    background:var(--page-bg); color:var(--ink);
+    font-family:'Manrope',system-ui,sans-serif; overflow-x:hidden;
+    transition: background .15s linear;
+  }
+  ::selection{ background:var(--accent); color:var(--cream); }
+  .lab{ font-family:'Cormorant Garamond',Georgia,serif; }
+  .eyb{ font-family:'Manrope',sans-serif; font-size:12px; letter-spacing:.30em; text-transform:uppercase; font-weight:600; }
+  @keyframes lm-grain{ 0%{transform:translate(0,0)} 100%{transform:translate(-4%,-3%)} }
+  @keyframes lm-float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @keyframes lm-spin{ to{ transform:rotate(360deg) } }
+  .word{ display:inline-block; margin-right:0.26em; will-change:transform,opacity; }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+</style>
+</helmet>
+
+<div style="position:relative; width:100%;">
+
+  <!-- ░░░ FIXED NAV ░░░ -->
+  <nav id="lm-nav" style="position:fixed; top:0; left:0; right:0; z-index:90; display:flex; align-items:center; justify-content:space-between; padding:22px clamp(20px,4vw,56px); transition:background .4s ease, backdrop-filter .4s ease, padding .4s ease; border-bottom:1px solid transparent;">
+    <a href="#hero" class="lab" style="font-size:23px; font-weight:600; letter-spacing:.02em; color:var(--cream); text-decoration:none; mix-blend-mode:difference;">La Meridiana</a>
+    <div style="display:none; gap:34px; align-items:center;" data-nav-links>
+      <a href="#salon" class="eyb" style="font-size:11px; color:inherit; text-decoration:none; opacity:.8;">The House</a>
+      <a href="#terrace" class="eyb" style="font-size:11px; color:inherit; text-decoration:none; opacity:.8;">Outdoors</a>
+      <a href="#bedrooms" class="eyb" style="font-size:11px; color:inherit; text-decoration:none; opacity:.8;">Interiors</a>
+    </div>
+    <a href="#invitation" class="eyb" style="font-size:11px; color:var(--cream); text-decoration:none; border:1px solid rgba(242,239,234,.45); padding:11px 20px; border-radius:40px; mix-blend-mode:difference;">Request the brochure</a>
+  </nav>
+
+  <!-- ░░░ SUN / WARMTH PROGRESS ░░░ -->
+  <div style="position:fixed; right:clamp(16px,3vw,40px); top:50%; transform:translateY(-50%); z-index:80; display:flex; flex-direction:column; align-items:center; gap:10px; pointer-events:none;" data-sun-rail>
+    <div style="width:1px; height:120px; background:linear-gradient(var(--mist),var(--cream)); opacity:.5; position:relative;">
+      <div id="lm-sun" style="position:absolute; left:50%; top:0; width:13px; height:13px; border-radius:50%; transform:translate(-50%,-50%); background:radial-gradient(circle, var(--cream), var(--accent)); box-shadow:0 0 16px 3px color-mix(in oklab, var(--accent), var(--cream) calc(var(--warmth)*100%));"></div>
+    </div>
+    <span class="eyb" id="lm-time" style="font-size:9px; writing-mode:vertical-rl; letter-spacing:.34em; color:var(--accent-deep); opacity:.85;">DAWN</span>
+  </div>
+
+  <!-- ░░░ SOUND TOGGLE ░░░ -->
+  <button onClick="{{ toggleSound }}" aria-label="Toggle sound" style="position:fixed; left:clamp(16px,3vw,40px); bottom:28px; z-index:80; width:46px; height:46px; border-radius:50%; border:1px solid var(--rule); background:color-mix(in oklab, var(--page-bg), transparent 30%); backdrop-filter:blur(8px); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--ink);">
+    <span class="eyb" style="font-size:9px;">{{ soundLabel }}</span>
+  </button>
+
+  <!-- ═══════════════ 0 · HERO ═══════════════ -->
+  <section id="hero" data-screen-label="00 Hero" style="position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(28px,6vw,90px); background:var(--ink); overflow:hidden;">
+    <!-- HERO MEDIA — 360° panorama, pans left→right on vertical scroll. Swap for #vid-hero video later -->
+    <div id="vid-hero" style="position:absolute; inset:0; z-index:0; overflow:hidden; background:var(--ink);">
+      <img id="hero-pano" src="uploads/ChatGPT Image Jul 2, 2026, 11_40_12 PM.png" alt="360° rooftop panorama at sunset" style="position:absolute; top:0; left:0; height:100%; width:auto; min-width:230vw; object-fit:cover; will-change:transform;">
+    </div>
+    <div style="position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(13,13,13,.55), transparent 30%, rgba(13,13,13,.2) 60%, rgba(13,13,13,.78));"></div>
+    <div style="position:relative; z-index:2; max-width:1100px;">
+      <p class="eyb" data-reveal style="color:var(--mist); margin-bottom:22px; opacity:.9;">Nagüeles · Marbella · Costa del Sol</p>
+      <h1 class="lab" data-words style="color:var(--cream); font-weight:500; font-size:clamp(48px,9vw,150px); line-height:.94; letter-spacing:-0.02em;">Where the day<br>stays longest.</h1>
+      <p data-reveal style="color:rgba(242,239,234,.74); max-width:540px; margin-top:30px; font-size:clamp(15px,1.5vw,19px); line-height:1.65;">You left somewhere the light gives up by four. Eleven houses in the Sierra Blanca foothills, built so it never does.</p>
+      <a href="#arrival" class="eyb" data-reveal style="display:inline-flex; align-items:center; gap:12px; margin-top:40px; color:var(--cream); text-decoration:none; font-size:11px;">
+        <span style="width:46px; height:46px; border:1px solid rgba(242,239,234,.4); border-radius:50%; display:inline-flex; align-items:center; justify-content:center; animation:lm-float 3s ease-in-out infinite;">↓</span>
+        Begin the descent into light
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 2 · ARRIVAL ═══════════════ -->
+  <section id="arrival" data-screen-label="02 Arrival" style="position:relative; padding:clamp(60px,12vw,180px) clamp(28px,6vw,90px); background:color-mix(in oklab, var(--mist), var(--cream) calc(var(--warmth)*100%));">
+    <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:clamp(30px,5vw,70px); align-items:center;" data-grid-2>
+      <div>
+        <p class="eyb" data-reveal style="color:var(--accent); margin-bottom:20px;">01 — Arrival</p>
+        <h2 class="lab" data-words style="font-weight:500; font-size:clamp(34px,5vw,68px); line-height:1.02; letter-spacing:-0.01em;">You open the door, and the temperature breaks.</h2>
+        <p data-reveal style="color:color-mix(in oklab,var(--ink),transparent 28%); margin-top:26px; max-width:460px; font-size:17px; line-height:1.75;">The hall pulls south. Light arrives ahead of you and waits in the rooms — first cool at the threshold, then gold the deeper you go. The house is oriented to keep the family in the brightest room of the hour.</p>
+        <div style="display:flex; gap:38px; margin-top:42px; flex-wrap:wrap;" data-reveal>
+          <div><div class="lab" style="font-size:46px; color:var(--accent-deep);">11</div><div class="eyb" style="font-size:10px; color:var(--accent); margin-top:4px;">Detached villas</div></div>
+          <div><div class="lab" style="font-size:46px; color:var(--accent-deep);">4</div><div class="eyb" style="font-size:10px; color:var(--accent); margin-top:4px;">Levels · private lift</div></div>
+          <div><div class="lab" style="font-size:46px; color:var(--accent-deep);">~37m²</div><div class="eyb" style="font-size:10px; color:var(--accent); margin-top:4px;">Living-dining room</div></div>
+        </div>
+      </div>
+      <!-- IMAGE SLOT: #img-arrival -->
+      <div id="img-arrival" data-reveal data-parallax="0.06" style="aspect-ratio:4/5; overflow:hidden; background:var(--sand);">
+        <img src="uploads/Architectural_interior_render_lu..._202607022231.jpeg" alt="Entrance hall with staircase and lift" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 3 · MORNING · KITCHEN (plan→render→reality) ═══════════════ -->
+  <section id="kitchen" data-screen-label="03 Morning Kitchen" style="position:relative; padding:clamp(40px,8vw,90px) clamp(20px,5vw,70px) 0; background:color-mix(in oklab, var(--mist), var(--cream) calc(var(--warmth)*100%));">
+    <div style="max-width:1280px; margin:0 auto;">
+      <p class="eyb" data-reveal style="color:var(--accent); margin-bottom:16px;">02 — Drawing to Dwelling</p>
+      <h2 class="lab" data-words style="font-weight:500; font-size:clamp(30px,4.6vw,62px); line-height:1.03; max-width:840px; letter-spacing:-0.01em;">First a line on paper. Then warm light. Then the place you actually live.</h2>
+    </div>
+    <!-- plan → render → reality reveal -->
+    <div class="lm-reveal-room" data-room="kitchen" style="position:relative; height:300vh; margin-top:clamp(30px,5vw,60px);">
+      <div style="position:sticky; top:0; height:100svh; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+        <div style="position:relative; width:min(1080px,92vw); aspect-ratio:16/10;">
+          <!-- LAYER 1: PLAN — basement floor plan (rotated 90°) -->
+          <div class="rl" data-layer="plan" style="position:absolute; inset:0; background:var(--mist); overflow:hidden;">
+            <img src="uploads/Modern%20luxury%20home%20floor%20plan%20design-7e366701.png" alt="Villa 39 ground-floor plan" loading="lazy" style="position:absolute; top:50%; left:50%; width:62.5%; height:160%; object-fit:cover; transform:translate(-50%,-50%) rotate(90deg); filter:saturate(.7) brightness(.98);">
+          </div>
+          <!-- LAYER 2: RENDER -->
+          <div class="rl" data-layer="render" style="position:absolute; inset:0; opacity:0; overflow:hidden; background:var(--sand);">
+            <img src="uploads/Architectural_interior_render_lu..._202607022233 (1)-2f60a941.jpeg" alt="Living-dining render" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <!-- LAYER 3: REALITY -->
+          <div class="rl" data-layer="reality" style="position:absolute; inset:0; opacity:0; overflow:hidden; background:var(--sand-deep);">
+            <img src="uploads/Luxury_villa_interior_render_202607030011.jpeg" alt="Open kitchen render" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <div style="position:absolute; left:0; bottom:-44px; display:flex; gap:8px; align-items:center;">
+            <span class="eyb" data-phase-label style="font-size:11px; color:var(--accent); letter-spacing:.3em;">PLAN</span>
+            <span style="font-family:ui-monospace,monospace; font-size:10px; color:color-mix(in oklab,var(--ink),transparent 50%);">— promise becoming home</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height:clamp(40px,8vw,90px);"></div>
+  </section>
+
+  <!-- ═══════════════ 4 · MIDDAY · SALÓN-COMEDOR ═══════════════ -->
+  <section id="salon" data-screen-label="04 Midday Salon" style="position:relative; min-height:100svh; padding:clamp(50px,10vw,150px) clamp(28px,6vw,90px); display:flex; align-items:center; overflow:hidden; background:color-mix(in oklab, #e9eef8, var(--cream) calc(var(--warmth)*100%));">
+    <div id="vid-salon" style="position:absolute; inset:0; z-index:0; overflow:hidden; background:var(--sand);">
+      <img src="uploads/Architectural_render_luxury_villa_202607022258.jpeg" alt="Terrace lounge render" loading="lazy" style="width:100%; height:100%; object-fit:cover; opacity:.9;">
+    </div>
+    <div style="position:absolute; inset:0; z-index:1; background:linear-gradient(90deg, color-mix(in oklab,var(--cream),transparent 8%) 0%, color-mix(in oklab,var(--cream),transparent 35%) 45%, transparent 100%);"></div>
+    <div style="position:relative; z-index:2; max-width:1280px; margin:0 auto; width:100%;">
+      <p class="eyb" data-reveal style="color:var(--accent); margin-bottom:22px;">03 — Midday · The Salón-Comedor</p>
+      <h2 class="lab" data-words style="font-weight:500; font-size:clamp(38px,7vw,108px); line-height:.98; max-width:14ch; letter-spacing:-0.02em;">This is where the sun gathers everyone.</h2>
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; margin-top:42px; align-items:flex-end;">
+        <p data-reveal style="color:color-mix(in oklab,var(--ink),transparent 25%); max-width:480px; font-size:18px; line-height:1.75;">Around midday the light reaches the open-plan living-dining room — roughly 37m² of it, the emotional heart of the house — where the kitchen, table and sofa share one south-facing volume. For a while the family is simply in the same warm room without trying to be. Full-height glass, no dark corner to drift into.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 5 · AFTERNOON · TERRACE + GARDEN ═══════════════ -->
+  <section id="terrace" data-screen-label="05 Afternoon Terrace" style="position:relative; padding:clamp(50px,10vw,150px) clamp(28px,6vw,90px); background:color-mix(in oklab, var(--sand), var(--cream) calc(var(--warmth)*100%));">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; margin-bottom:clamp(30px,4vw,54px);">
+        <div>
+          <p class="eyb" data-reveal style="color:var(--accent); margin-bottom:18px;">05 — Afternoon · Terrace & Garden</p>
+          <h2 class="lab" data-words style="font-weight:500; font-size:clamp(32px,5vw,72px); line-height:1.02; max-width:16ch; letter-spacing:-0.01em;">The light spills outdoors, and the afternoon refuses to hurry.</h2>
+        </div>
+        <p data-reveal style="max-width:340px; color:color-mix(in oklab,var(--ink),transparent 30%); font-size:16px; line-height:1.7;">Private garden, room to put a table where the sun lands longest. Villa 39 keeps it all day.</p>
+      </div>
+      <!-- IMAGE SLOT: #img-terrace -->
+      <div id="img-terrace" data-reveal data-parallax="0.05" style="aspect-ratio:16/8; overflow:hidden; background:var(--sand-deep);">
+        <img src="uploads/Architectural_render_luxury_villa_202607022259.jpeg" alt="Terrace and garden at golden hour" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 6 · EVENING · BEDROOMS (real photos) ═══════════════ -->
+  <section id="bedrooms" data-screen-label="06 Evening Bedrooms" style="position:relative; padding:clamp(56px,11vw,170px) clamp(28px,6vw,90px); background:color-mix(in oklab, #1a1808, var(--ink-soft) calc(var(--warmth)*100%)); color:var(--cream);">
+    <div style="max-width:1280px; margin:0 auto;">
+      <p class="eyb" data-reveal style="color:var(--mist); margin-bottom:20px; opacity:.85;">06 — Evening · The Bedrooms</p>
+      <h2 class="lab" data-words style="font-weight:400; font-size:clamp(34px,5.4vw,80px); line-height:1.0; max-width:15ch; letter-spacing:-0.01em;">When the light goes low, the house keeps the warmth it gathered.</h2>
+      <p data-reveal style="color:rgba(242,239,234,.66); max-width:520px; margin-top:26px; font-size:17px; line-height:1.7;">Three bedrooms on the first floor, plus a flexible basement room — an optional fourth bed or guest suite. Deep, quiet, made for rest.</p>
+      <div style="margin-top:clamp(34px,5vw,60px);" data-bed-grid>
+        <div data-reveal style="aspect-ratio:4/3; overflow:hidden;"><img src="uploads/Architectural_interior_render_lu..._202607022306.jpeg" alt="Bedrooms" loading="lazy" style="width:100%;height:100%;object-fit:cover;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 10 · THE INVITATION ═══════════════ -->
+  <section id="invitation" data-screen-label="10 Invitation" style="position:relative; padding:clamp(56px,11vw,170px) clamp(28px,6vw,90px); background:color-mix(in oklab, #f4efe7, var(--cream) calc(var(--warmth)*100%));">
+    <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:clamp(34px,5vw,70px);" data-invite-grid>
+      <div>
+        <p class="eyb" data-reveal style="color:var(--accent); margin-bottom:20px;">06 — The Invitation</p>
+        <h2 class="lab" data-words style="font-weight:500; font-size:clamp(34px,5.6vw,86px); line-height:.98; max-width:14ch; letter-spacing:-0.01em;">Come and stand in the light yourself.</h2>
+        <p data-reveal style="max-width:440px; margin-top:24px; color:color-mix(in oklab,var(--ink),transparent 28%); font-size:17px; line-height:1.75;">Request the full brochure and book a private viewing. We'll send floor plans, finishes, and orientation studies for the unit you're drawn to.</p>
+        <div data-reveal style="display:flex; flex-wrap:wrap; gap:14px; margin-top:34px;">
+          <a href="La Meridiana Deck.dc.html" class="eyb" style="display:inline-flex; align-items:center; gap:10px; font-size:11px; color:var(--ink); text-decoration:none; border:1px solid var(--rule); padding:14px 22px; border-radius:40px; transition:background .3s ease, color .3s ease;" style-hover="background:var(--ink); color:var(--cream);">The Presentation <span style="opacity:.6;">↗</span></a>
+          <a href="La Meridiana Social.dc.html" class="eyb" style="display:inline-flex; align-items:center; gap:10px; font-size:11px; color:var(--ink); text-decoration:none; border:1px solid var(--rule); padding:14px 22px; border-radius:40px; transition:background .3s ease, color .3s ease;" style-hover="background:var(--ink); color:var(--cream);">Social Kit <span style="opacity:.6;">↗</span></a>
+        </div>
+      </div>
+      <div data-reveal>
+        <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px solid var(--accent); border-radius:6px; padding:48px 40px; background:color-mix(in oklab,var(--cream),var(--accent) 6%);">
+            <h3 class="lab" style="font-size:34px; font-weight:500;">Thank you.</h3>
+            <p style="margin-top:14px; color:color-mix(in oklab,var(--ink),transparent 28%); font-size:16px; line-height:1.7;">Your brochure is on its way. We'll be in touch to arrange your viewing — and to keep the day waiting for you.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}" style="display:grid; gap:18px; background:color-mix(in oklab,var(--cream),transparent 30%); border:1px solid var(--rule); border-radius:6px; padding:clamp(26px,3vw,44px);">
+            <div style="display:grid; gap:7px;">
+              <label class="eyb" style="font-size:10px; color:var(--accent);">Name</label>
+              <input name="name" required placeholder="Your name" style="background:transparent; border:none; border-bottom:1px solid var(--rule); padding:10px 0; font-size:16px; font-family:inherit; color:var(--ink); outline:none;">
+            </div>
+            <div style="display:grid; gap:7px;">
+              <label class="eyb" style="font-size:10px; color:var(--accent);">Email</label>
+              <input name="email" type="email" required placeholder="you@email.com" style="background:transparent; border:none; border-bottom:1px solid var(--rule); padding:10px 0; font-size:16px; font-family:inherit; color:var(--ink); outline:none;">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+              <div style="display:grid; gap:7px;">
+                <label class="eyb" style="font-size:10px; color:var(--accent);">Unit of interest</label>
+                <select name="unit" style="background:transparent; border:none; border-bottom:1px solid var(--rule); padding:10px 0; font-size:16px; font-family:inherit; color:var(--ink); outline:none;">
+                  <sc-for list="{{ villas }}" as="v" hint-placeholder-count="11"><option value="Villa {{ v.n }}">Villa {{ v.n }}</option></sc-for>
+                  <option value="Undecided">Undecided</option>
+                </select>
+              </div>
+              <div style="display:grid; gap:7px;">
+                <label class="eyb" style="font-size:10px; color:var(--accent);">Preferred date</label>
+                <input name="date" type="date" style="background:transparent; border:none; border-bottom:1px solid var(--rule); padding:10px 0; font-size:16px; font-family:inherit; color:var(--ink); outline:none;">
+              </div>
+            </div>
+            <button type="submit" class="eyb" style="margin-top:8px; font-size:11px; color:var(--cream); background:var(--accent); border:none; padding:16px; border-radius:40px; cursor:pointer;" style-hover="background:var(--accent-deep);">Request the brochure</button>
+            <p style="font-size:12px; color:color-mix(in oklab,var(--ink),transparent 50%); line-height:1.6;">Private enquiry. We never publish prices online — your brochure includes full details.</p>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 11 · FOOTER ═══════════════ -->
+  <footer style="background:var(--ink); color:var(--cream); padding:clamp(50px,8vw,110px) clamp(28px,6vw,90px) 40px;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; border-bottom:1px solid rgba(242,239,234,.16); padding-bottom:40px;">
+        <div>
+          <div class="lab" style="font-size:clamp(38px,5vw,68px); font-weight:500;">La Meridiana</div>
+          <p class="eyb" style="font-size:11px; color:var(--mist); margin-top:14px; opacity:.8;">Where the day stays longest.</p>
+        </div>
+        <div style="display:flex; gap:60px; flex-wrap:wrap;">
+          <div>
+            <p class="eyb" style="font-size:10px; color:var(--accent); opacity:.9;">Location</p>
+            <p style="margin-top:12px; font-size:15px; line-height:1.7; color:rgba(242,239,234,.78);">Nagüeles, Marbella<br>Sierra Blanca foothills<br>Golden Mile · Costa del Sol</p>
+          </div>
+          <div>
+            <p class="eyb" style="font-size:10px; color:var(--accent); opacity:.9;">Developer</p>
+            <p style="margin-top:12px; font-size:15px; line-height:1.7; color:rgba(242,239,234,.78);">BY.OPEN<br><a href="#invitation" style="color:var(--mist); text-decoration:underline; text-underline-offset:3px;">Request the brochure</a></p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; padding-top:26px;">
+        <p style="font-size:12px; color:rgba(242,239,234,.45);">© 2026 BY.OPEN · La Meridiana. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#557373&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;warmthStrength&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Light arc&quot;,&quot;unit&quot;:&quot;&quot;},&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Walkthrough&quot;}}">
+class Component extends DCLogic {
+  // ═══════════════ 3D WALKTHROUGH CONFIG (drop your model + tune the route) ═══════════════
+  MODEL_PATH = ""; // e.g. "uploads/villa.glb" — leave "" to use the placeholder volumes
+  // Camera path along the light arc. warmth: 0 cool morning → 1 golden hour.
+  WAYPOINTS = [
+    { title:"Entrance Hall", sub:"You step in from the cool of the drive; the hall pulls you south.", pos:[0,1.6,11],  look:[0,1.5,0],   warmth:0.05 },
+    { title:"The Kitchen",   sub:"Morning light, the kettle on, the first of you awake.",            pos:[-4,1.6,4],  look:[-5,1.4,0],  warmth:0.25 },
+    { title:"Salón-Comedor", sub:"Midday. The sun gathers the family in one warm room.",            pos:[3,1.6,2],   look:[6,1.4,-2],  warmth:0.5 },
+    { title:"Terrace & Garden", sub:"The light spills outdoors; the afternoon slows.",              pos:[6,1.6,-4],  look:[10,1.2,-8], warmth:0.65 },
+    { title:"The Staircase", sub:"Up through the house, the warmth rising with you.",                pos:[0,3.4,-3],  look:[0,4,-5],    warmth:0.8 },
+    { title:"Rooftop Solarium", sub:"Golden hour. The crown. Where the day refuses to end.",        pos:[0,7,3],     look:[0,6.5,-3],  warmth:1.0 },
+  ];
+
+  state = { sound:false, explore:false, active:0, submitted:false };
+
+  villaData = [
+    { n:"39", orient:"South", size:271, hero:true,  line:"All-day garden sun — the only house here that keeps the light from first cup to last. A generous, light-flooded ground floor made for a family to spread out in." },
+    { n:"40", orient:"South", size:241, line:"Interior light through the open core, crowned by a private rooftop solarium. Lead a life by the hour, not the floor plan." },
+    { n:"41", orient:"South", size:238, line:"Calm, bright interiors and the rooftop above — pergola lounge, garden, sky. Lifestyle over square metres." },
+    { n:"42", orient:"South", size:236, line:"South light pouring through the salón, the solarium waiting upstairs for the warmest end of the day." },
+    { n:"44", orient:"South", size:259, line:"Mid-block with the nicer outlook — framed views paired with the deep interior light the house is built around." },
+    { n:"45", orient:"South", size:262, line:"Views and light together: an open salón that looks out, and a rooftop that looks up." },
+    { n:"46", orient:"South", size:255, line:"One of the view units — long sightlines from the living level, full sun on the roof." },
+    { n:"47", orient:"South", size:244, line:"Interior light and the rooftop crown; a quiet, complete house for everyday living." },
+    { n:"48", orient:"South-East", size:233, line:"South-east light arrives early and soft; the solarium carries the day through to golden hour." },
+    { n:"49", orient:"South-East", size:229, line:"Bright, morning-forward interiors with the full rooftop above — solarium, pergola, garden." },
+    { n:"50", orient:"South-East", size:227, line:"South-east aspect, generous interior light, and the rooftop lifestyle that defines the collection." },
+  ];
+
+  componentDidMount(){
+    this.reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.mobile = window.matchMedia && window.matchMedia("(max-width: 820px)").matches;
+    this.syncTheme();
+    this.applyResponsive();
+    this._onResize = ()=>{ this.applyResponsive(); if(this.renderer) this.onResize3D(); };
+    window.addEventListener("resize", this._onResize);
+    this.waitForLibs();
+  }
+  componentDidUpdate(){ this.syncTheme(); }
+  componentWillUnmount(){
+    window.removeEventListener("resize", this._onResize);
+    if(this._raf) cancelAnimationFrame(this._raf);
+    // NOTE: do not global-kill ScrollTriggers here — in a double-mount the next
+    // live instance owns them. init() does a clean reset on each run instead.
+  }
+
+  syncTheme(){
+    const r = document.body;
+    if(this.props.accentColor){ r.style.setProperty("--accent", this.props.accentColor); }
+  }
+
+  applyResponsive(){
+    const wide = window.innerWidth > 860;
+    const set = (sel,prop,val)=>{ const el=document.querySelector(sel); if(el) el.style[prop]=val; };
+    document.querySelectorAll("[data-grid-2]").forEach(e=> e.style.gridTemplateColumns = wide?"1.05fr 1fr":"1fr");
+    document.querySelectorAll("[data-invite-grid]").forEach(e=> e.style.gridTemplateColumns = wide?"1fr 1fr":"1fr");
+    document.querySelectorAll("[data-collection-grid]").forEach(e=> e.style.gridTemplateColumns = wide?"280px 1fr":"1fr");
+    document.querySelectorAll("[data-detail-grid] > div:first-child").forEach(e=>{});
+    const nl=document.querySelector("[data-nav-links]"); if(nl) nl.style.display = wide?"flex":"none";
+    const rail=document.querySelector("[data-sun-rail]"); if(rail) rail.style.display = wide?"flex":"none";
+    document.querySelectorAll("[data-bed-grid]").forEach(e=> e.style.gridTemplateColumns = wide?"repeat(2,1fr)":"1fr");
+    document.querySelectorAll("[data-roof-grid]").forEach(e=> e.style.gridTemplateColumns = wide?"1.4fr 1fr":"1fr");
+  }
+
+  waitForLibs(tries=0){
+    if(window.gsap && window.ScrollTrigger && window.THREE){ this.init(); return; }
+    if(tries>120){ this.setWarmth(0.8); this.init3D(); return; } // degrade gracefully
+    setTimeout(()=>this.waitForLibs(tries+1), 80);
+  }
+
+  setWarmth(v){
+    this._warmth = v;
+    document.body.style.setProperty("--warmth", v.toFixed(4));
+    const sun = document.getElementById("lm-sun");
+    if(sun) sun.style.top = (v*100)+"%";
+    const t = document.getElementById("lm-time");
+    if(t){ const labels=["DAWN","MORNING","MIDDAY","AFTERNOON","GOLDEN HOUR"]; t.textContent = labels[Math.min(labels.length-1, Math.floor(v*labels.length))]; }
+  }
+
+  init(){
+    const gsap = window.gsap; gsap.registerPlugin(ScrollTrigger);
+    const strength = (this.props.warmthStrength!=null)? this.props.warmthStrength : 1;
+
+    // ── clean slate: a previous (double-)mount may have left triggers/lenis/ticker ──
+    ScrollTrigger.getAll().forEach(t=>t.kill());
+    if(window.__lmLenis){ try{ window.__lmLenis.destroy(); }catch(e){} window.__lmLenis=null; }
+    if(window.__lmTicker){ try{ gsap.ticker.remove(window.__lmTicker); }catch(e){} window.__lmTicker=null; }
+
+    if(this.reduce){
+      this.setWarmth(0.82*strength);
+      document.querySelectorAll("[data-reveal],[data-words]").forEach(e=>{ e.style.opacity=1; });
+      this.init3D();
+      return;
+    }
+
+    // ── warmth driver (scroll progress of the whole document) ──
+    const updateWarmth = ()=>{
+      const max = (document.documentElement.scrollHeight - window.innerHeight);
+      const p = max>0 ? window.scrollY/max : 0;
+      this.setWarmth(Math.min(1,Math.max(0,p))*strength);
+    };
+
+    // ── Lenis smooth scroll (scrolls window by default — no scrollerProxy needed) ──
+    if(window.Lenis){
+      this.lenis = new Lenis({ duration:1.15, smoothWheel:true, lerp:0.09 });
+      window.__lmLenis = this.lenis;
+      this.lenis.on("scroll", ()=>{ ScrollTrigger.update(); updateWarmth(); });
+      this._ticker = (t)=>{ if(this.lenis) this.lenis.raf(t*1000); };
+      window.__lmTicker = this._ticker;
+      gsap.ticker.add(this._ticker);
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      window.addEventListener("scroll", updateWarmth, { passive:true });
+    }
+    updateWarmth();
+
+    // ── nav blur on scroll ──
+    const nav = document.getElementById("lm-nav");
+    ScrollTrigger.create({ start:80, onUpdate:(s)=>{
+      const on = s.scroll()>80;
+      nav.style.background = on? "color-mix(in oklab, var(--page-bg), transparent 15%)":"transparent";
+      nav.style.backdropFilter = on? "blur(14px)":"none";
+      nav.style.borderBottomColor = on? "var(--rule)":"transparent";
+      nav.style.padding = on? "14px clamp(20px,4vw,56px)":"22px clamp(20px,4vw,56px)";
+      [...nav.querySelectorAll("a")].forEach(a=>{ if(a.getAttribute("href")!=="#hero" && !a.textContent.includes("brochure")) a.style.color = on?"var(--ink)":"var(--cream)"; });
+    }});
+
+    // ── word reveals ──
+    document.querySelectorAll("[data-words]").forEach(h=>{
+      if(h.querySelector(".word")) return; // already split — no-op
+      // preserve <br> (with any editor-stamped attributes), split the rest into words
+      const html = h.innerHTML.replace(/<br[^>]*>/gi," |||BR||| ");
+      const parts = html.split(/\s+/).filter(Boolean);
+      h.innerHTML = parts.map(p=> p==="|||BR|||" ? "<br>" : `<span class="word">${p}</span>`).join("");
+      const words = h.querySelectorAll(".word");
+      gsap.set(words,{ yPercent:115, opacity:0 });
+      ScrollTrigger.create({ trigger:h, start:"top 85%", once:true, onEnter:()=>{
+        gsap.to(words,{ yPercent:0, opacity:1, duration:0.9, ease:"power3.out", stagger:0.045 });
+      }});
+    });
+
+    // ── generic reveals ──
+    document.querySelectorAll("[data-reveal]").forEach(el=>{
+      gsap.set(el,{ y:36, opacity:0 });
+      ScrollTrigger.create({ trigger:el, start:"top 88%", once:true, onEnter:()=>{
+        gsap.to(el,{ y:0, opacity:1, duration:1.0, ease:"power3.out" });
+      }});
+    });
+
+    // ── parallax layers ──
+    document.querySelectorAll("[data-parallax]").forEach(el=>{
+      const amt = parseFloat(el.getAttribute("data-parallax"))*220;
+      gsap.fromTo(el,{ y:-amt },{ y:amt, ease:"none", scrollTrigger:{ trigger:el.closest("section")||el, start:"top bottom", end:"bottom top", scrub:true } });
+    });
+
+    // ── hero 360° panorama: section pins, vertical scroll pans image left→right, THEN page continues ──
+    const pano = document.getElementById("hero-pano");
+    const heroSec = document.getElementById("hero");
+    if(pano && heroSec){
+      const overflow = ()=> Math.max(1, pano.offsetWidth - heroSec.clientWidth);
+      const panPano = (p)=>{ pano.style.transform = `translateX(${-overflow()*p}px)`; };
+      panPano(0);
+      ScrollTrigger.create({
+        trigger:heroSec, start:"top top", end:()=> "+=" + overflow(),
+        pin:true, pinSpacing:true, scrub:0.4, invalidateOnRefresh:true,
+        onUpdate:(self)=> panPano(self.progress)
+      });
+    }
+
+    // ── plan → render → reality ──
+    document.querySelectorAll(".lm-reveal-room").forEach(room=>{
+      const plan = room.querySelector('[data-layer="plan"]');
+      const render = room.querySelector('[data-layer="render"]');
+      const reality = room.querySelector('[data-layer="reality"]');
+      const label = room.querySelector("[data-phase-label]");
+      gsap.set(render,{ opacity:0, clipPath:"inset(0 100% 0 0)" });
+      gsap.set(reality,{ opacity:0, clipPath:"inset(0 100% 0 0)" });
+      ScrollTrigger.create({ trigger:room, start:"top top", end:"bottom bottom", scrub:0.6,
+        onUpdate:(self)=>{
+          const p = self.progress;
+          // phase 1 (0-.45): plan→render ; phase 2 (.55-1): render→reality
+          const r1 = Math.min(1, Math.max(0,(p-0.10)/0.35));
+          const r2 = Math.min(1, Math.max(0,(p-0.55)/0.35));
+          render.style.opacity = r1;
+          render.style.clipPath = `inset(0 ${(1-r1)*100}% 0 0)`;
+          plan.style.opacity = 1-r1*0.9;
+          reality.style.opacity = r2;
+          reality.style.clipPath = `inset(0 ${(1-r2)*100}% 0 0)`;
+          if(label) label.textContent = r2>0.5?"REALITY":(r1>0.5?"RENDER":"PLAN");
+        }
+      });
+    });
+
+    this.init3D();
+    ScrollTrigger.refresh();
+  }
+
+  // ═══════════════ THREE.JS WALKTHROUGH ═══════════════
+  init3D(){
+    const THREE = window.THREE;
+    const canvas = document.getElementById("villa-canvas");
+    if(!THREE || !canvas) return;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0d0d0d, 0.02);
+    const camera = new THREE.PerspectiveCamera(52, canvas.clientWidth/canvas.clientHeight, 0.1, 200);
+    camera.position.set(0,1.6,11);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.mobile?1.5:2));
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer=renderer; this.camera=camera; this.scene=scene;
+
+    // lighting (color lerps cool→warm with warmth)
+    const hemi = new THREE.HemisphereLight(0xdfe5f3, 0x272401, 0.9); scene.add(hemi);
+    const sun = new THREE.DirectionalLight(0xbcd0ee, 1.1); sun.position.set(6,12,6); scene.add(sun);
+    const fill = new THREE.PointLight(0xffe6bf, 0.0, 40); fill.position.set(0,6,0); scene.add(fill);
+    this.lights={ hemi, sun, fill };
+
+    // ── PLACEHOLDER VILLA (replaced by GLB at MODEL_PATH) ──
+    const group = new THREE.Group(); scene.add(group);
+    const floorMat = new THREE.MeshStandardMaterial({ color:0xcbc4b4, roughness:0.95 });
+    const wallMat  = new THREE.MeshStandardMaterial({ color:0xe5dfd3, roughness:1, side:THREE.DoubleSide });
+    const slabMat  = new THREE.MeshStandardMaterial({ color:0xf2efea, roughness:0.9 });
+    const mkBox=(w,h,d,x,y,z,m)=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), m); b.position.set(x,y,z); group.add(b); return b; };
+    // floors per level
+    mkBox(26,0.2,26,0,0,0,floorMat);          // ground
+    mkBox(20,0.2,20,0,3.2,-2,slabMat);        // first floor slab
+    mkBox(16,0.2,16,0,6.4,0,slabMat);         // roof slab
+    // a few walls / volumes to read as rooms
+    mkBox(0.3,3,16,-6,1.6,0,wallMat);
+    mkBox(0.3,3,16, 6,1.6,-2,wallMat);
+    mkBox(12,3,0.3,0,1.6,-8,wallMat);
+    mkBox(4,2.4,4,-5,1.4,2,new THREE.MeshStandardMaterial({color:0xdfe5f3,roughness:1})); // kitchen block
+    mkBox(7,0.1,3,6,3.4,-2,new THREE.MeshStandardMaterial({color:0x557373,roughness:.8})); // pergola hint
+    // staircase steps
+    for(let i=0;i<8;i++){ mkBox(2,0.2,0.8,0,0.4+i*0.4,-4+i*0.4,floorMat); }
+    this.villaGroup=group;
+
+    // optional real model
+    if(this.MODEL_PATH && window.THREE.GLTFLoader){
+      const loader = new THREE.GLTFLoader();
+      loader.load(this.MODEL_PATH, (gltf)=>{ group.visible=false; scene.add(gltf.scene); this.hideLoader(); },
+        undefined, ()=>{ this.hideLoader(); });
+    } else {
+      this.hideLoader();
+    }
+
+    // OrbitControls for explore
+    if(THREE.OrbitControls){
+      const ctr = new THREE.OrbitControls(camera, renderer.domElement);
+      ctr.enableDamping=true; ctr.dampingFactor=0.08; ctr.enabled=false; ctr.minDistance=2; ctr.maxDistance=30;
+      this.controls=ctr;
+    }
+
+    // build stop markers
+    const stops = document.getElementById("villa-stops");
+    if(stops && !stops.children.length){
+      this.WAYPOINTS.forEach((w,i)=>{ const d=document.createElement("div"); d.style.cssText="width:7px;height:7px;border-radius:50%;background:rgba(242,239,234,.35);transition:.3s;"; d.dataset.i=i; stops.appendChild(d); });
+    }
+
+    // scroll-driven camera path
+    this._camT = 0;
+    if(window.gsap && window.ScrollTrigger && !this.reduce){
+      ScrollTrigger.create({ trigger:"#walkthrough", start:"top top", end:"bottom bottom", scrub:0.7,
+        onUpdate:(self)=>{ if(!this.state.explore) this.updateCamera(self.progress); }
+      });
+    } else {
+      this.updateCamera(0);
+    }
+
+    // render loop
+    const tmp = new THREE.Vector3();
+    const tick=()=>{
+      if(this.controls && this.state.explore) this.controls.update();
+      renderer.render(scene, camera);
+      this._3draf = requestAnimationFrame(tick);
+    };
+    tick();
+    this.onResize3D();
+  }
+
+  hideLoader(){ const l=document.getElementById("villa-loading"); if(l){ l.style.opacity=0; setTimeout(()=>l.style.display="none",600);} }
+
+  updateCamera(p){
+    const THREE=window.THREE; if(!THREE||!this.camera) return;
+    const wp=this.WAYPOINTS; const n=wp.length-1;
+    const f = Math.min(0.9999, Math.max(0,p))*n;
+    const i = Math.floor(f); const t = f-i;
+    const a=wp[i], b=wp[Math.min(n,i+1)];
+    const lerp=(x,y)=>x+(y-x)*this.ease(t);
+    this.camera.position.set(lerp(a.pos[0],b.pos[0]), lerp(a.pos[1],b.pos[1]), lerp(a.pos[2],b.pos[2]));
+    if(!this.state.explore) this.camera.lookAt( lerp(a.look[0],b.look[0]), lerp(a.look[1],b.look[1]), lerp(a.look[2],b.look[2]) );
+    const w = lerp(a.warmth,b.warmth);
+    // lighting warmth
+    const cool=new THREE.Color(0xbcd0ee), warm=new THREE.Color(0xffd9a0);
+    this.lights.sun.color.copy(cool).lerp(warm,w); this.lights.sun.intensity=0.9+w*0.8;
+    this.lights.hemi.color.copy(new THREE.Color(0xdfe5f3)).lerp(new THREE.Color(0xfff0d6),w);
+    this.lights.fill.intensity = w*1.6;
+    this.scene.fog.color.copy(new THREE.Color(0x12131a)).lerp(new THREE.Color(0x2a2410),w);
+    // UI
+    const idx = Math.round(f);
+    const cur = wp[idx]||wp[0];
+    const title=document.getElementById("villa-stop-title"), sub=document.getElementById("villa-stop-sub");
+    if(title && this._lastStop!==idx){ title.textContent=cur.title; if(sub) sub.textContent=cur.sub; this._lastStop=idx; }
+    const fill=document.getElementById("villa-progress-fill"); if(fill) fill.style.width=(p*100)+"%";
+    document.querySelectorAll("#villa-stops > div").forEach((d,k)=>{ d.style.background = k<=idx?"var(--cream)":"rgba(242,239,234,.35)"; d.style.transform = k===idx?"scale(1.6)":"scale(1)"; });
+  }
+  ease(t){ return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+
+  onResize3D(){ const c=document.getElementById("villa-canvas"); if(!c||!this.renderer)return; this.camera.aspect=c.clientWidth/c.clientHeight; this.camera.updateProjectionMatrix(); this.renderer.setSize(c.clientWidth,c.clientHeight,false); }
+
+  renderVals(){
+    const active = this.villaData[this.state.active];
+    const villas = this.villaData.map((v,i)=>({
+      ...v,
+      isHero: !!v.hero,
+      btnStyle: `display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:14px 14px;border-radius:4px;cursor:pointer;font-family:inherit;text-align:left;transition:all .25s ease;border:1px solid ${i===this.state.active?"var(--accent)":"var(--rule)"};background:${i===this.state.active?"var(--accent)":"transparent"};color:${i===this.state.active?"var(--cream)":"var(--ink)"};`
+    }));
+    return {
+      villas,
+      active: { ...active, isHero: !!active.hero },
+      onUnitClick: (e)=>{ const n=e.currentTarget.dataset.unit; const idx=this.villaData.findIndex(v=>v.n===n); if(idx>=0) this.setState({active:idx}); },
+      soundLabel: this.state.sound? "ON":"OFF",
+      toggleSound: ()=> this.setState(s=>({sound:!s.sound})),
+      exploreLabel: this.state.explore? "↩ Guided scroll":"⊹ Explore freely",
+      toggleExplore: ()=>{ const ex=!this.state.explore; this.setState({explore:ex}); if(this.controls) this.controls.enabled=ex; },
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      onSubmit: (e)=>{ e.preventDefault(); this.setState({submitted:true}); },
+    };
+  }
+}
+</script>
+</body>
+</html>

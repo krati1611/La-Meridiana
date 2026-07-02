@@ -72,6 +72,9 @@
     [data-nav-links], [data-sun-rail] {
       display: none !important;
     }
+    .lm-reveal-room { height: 200vh !important; }
+    .room-aspect { aspect-ratio: 4/5 !important; }
+    .plan-img { width: 150% !important; height: 100% !important; }
   }
   @media (min-width: 861px) {
     [data-grid-2] { grid-template-columns: 1.05fr 1fr !important; }
@@ -157,10 +160,10 @@
     <!-- plan → render → reality reveal -->
     <div class="lm-reveal-room" data-room="kitchen" style="position:relative; height:300vh; margin-top:clamp(30px,5vw,60px);">
       <div style="position:sticky; top:0; height:100svh; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-        <div style="position:relative; width:min(1080px,92vw); aspect-ratio:16/10;">
+        <div class="room-aspect" style="position:relative; width:min(1080px,92vw); aspect-ratio:16/10;">
           <!-- LAYER 1: PLAN — basement floor plan (rotated 90°) -->
           <div class="rl" data-layer="plan" style="position:absolute; inset:0; background:var(--mist); overflow:hidden;">
-            <img src="uploads/Modern%20luxury%20home%20floor%20plan%20design-7e366701.png" alt="Villa 39 ground-floor plan" loading="lazy" style="position:absolute; top:50%; left:50%; width:62.5%; height:160%; object-fit:cover; transform:translate(-50%,-50%) rotate(90deg); filter:saturate(.7) brightness(.98);">
+            <img class="plan-img" src="uploads/Modern%20luxury%20home%20floor%20plan%20design-7e366701.png" alt="Villa 39 ground-floor plan" loading="lazy" style="position:absolute; top:50%; left:50%; width:62.5%; height:160%; object-fit:cover; transform:translate(-50%,-50%) rotate(90deg); filter:saturate(.7) brightness(.98);">
           </div>
           <!-- LAYER 2: RENDER -->
           <div class="rl" data-layer="render" style="position:absolute; inset:0; opacity:0; overflow:hidden; background:var(--sand);">

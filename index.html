@@ -61,7 +61,7 @@
   @keyframes lm-grain{ 0%{transform:translate(0,0)} 100%{transform:translate(-4%,-3%)} }
   @keyframes lm-float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   @keyframes lm-spin{ to{ transform:rotate(360deg) } }
-  .word{ display:inline-block; margin-right:0.26em; will-change:transform,opacity; }
+  .word{ display:inline-block; will-change:transform,opacity; }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
 
   /* Responsive layouts */
@@ -421,7 +421,7 @@ class Component extends DCLogic {
       // preserve <br> (with any editor-stamped attributes), split the rest into words
       const html = h.innerHTML.replace(/<br[^>]*>/gi," |||BR||| ");
       const parts = html.split(/\s+/).filter(Boolean);
-      h.innerHTML = parts.map(p=> p==="|||BR|||" ? "<br>" : `<span class="word">${p}</span>`).join("");
+      h.innerHTML = parts.map(p=> p==="|||BR|||" ? "<br>" : `<span class="word">${p}</span>`).join(" ");
       const words = h.querySelectorAll(".word");
       gsap.set(words,{ yPercent:115, opacity:0 });
       ScrollTrigger.create({ trigger:h, start:"top 85%", once:true, onEnter:()=>{
